@@ -1,4 +1,4 @@
-Video API — FastAPI + PostgreSQL + Redis
+# Video API — FastAPI + PostgreSQL + Redis
 
 Этот проект — REST API-сервис для загрузки и обработки видео, реализованный на FastAPI. Он включает асинхронную работу с PostgreSQL, кэширование с помощью Redis и обработку видео в фоне.
 
@@ -14,49 +14,53 @@ Video API — FastAPI + PostgreSQL + Redis
 
 ---
 
-## Как запустить проект локально
+### Как запустить проект локально
 
-> Убедитесь, что у вас установлены Docker и Docker Compose.
+> У вас должны быть установлены Docker и Docker Compose.
 
-### 1. Клонируйте репозиторий
 
+## 1. Клонируйте репозиторий
 ```bash
 git clone https://github.com/your-username/your-repo-name.git
 cd your-repo-name
-2. Создайте .env файл
-Создайте .env в корне проекта:
-
-DATABASE_URL=postgresql+asyncpg://safar:safar@db:5432/game_test
+```
+## 2. Создайте .env файл
+Создайте .env в корне проекта c:
+```bash
+DATABASE_URL=postgresql+asyncpg://user:pass@db:5432/db_name
 REDIS_URL=redis://redis:6379
-Также можно скопировать из примера:
+```
 
-cp .env.example .env
-3. Запустите проект с помощью Docker Compose
+## 3. Запустите проект с помощью Docker Compose
+```bash
 docker compose up --build
+```
 Это поднимет следующие сервисы:
 
-app — FastAPI-приложение
-db — PostgreSQL
-redis — Redis
+app — FastAPI-приложение<br>
+db — PostgreSQL<br>
+redis — Redis<br><br>
 Приложение будет доступно на:
 http://localhost:8000
 
-4. Примените миграции
+## 4. Примените миграции
 !!После запуска, в новом терминале выполните:
-
+```bash
 docker compose exec app alembic upgrade head
+```
 Это создаст таблицы в базе данных.
 
-5. Используйте API
+## 5. Используйте API
 Документация Swagger будет доступна по адресу:
 
-http://localhost:8000/docs
+http://localhost:8000/docs <br>
 Там вы можете:
+- загружать видео (POST /api/videos)
+- получать видео по ID (GET /api/videos/{id})
 
-загружать видео (POST /api/videos)
-получать видео по ID (GET /api/videos/{id})
-Структура проекта
 
+## Структура проекта
+```bash
 .
 ├── alembic/                   # Миграции
 │   └── versions/
@@ -75,9 +79,10 @@ http://localhost:8000/docs
 ├── .env                       # Переменные окружения
 ├── requirements.txt           # Зависимости
 └── .gitignore
+```
 
 Примечания
 
-Все переменные конфигурации находятся в .env
-База данных и Redis запускаются внутри Docker контейнеров
-Видео обрабатываются асинхронно в фоне (фейковая обработка HLS)
+- Все переменные конфигурации находятся в .env
+- База данных и Redis запускаются внутри Docker контейнеров
+- Видео обрабатываются асинхронно в фоне
